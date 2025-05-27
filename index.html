@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CRM Submission</title>
+</head>
+<body>
+  <h2>CRM Form for <span id="usernameDisplay"></span></h2>
+  <form action="https://n8n.treysisson.com/webhook/form-submission" method="POST">
+    <input type="hidden" name="username" id="username" />
+
+    <label>Name:<br>
+      <input type="text" name="name" required>
+    </label><br><br>
+
+    <label>Email:<br>
+      <input type="email" name="email">
+    </label><br><br>
+
+    <label>Content Focus:<br>
+      <input type="text" name="content_focus">
+    </label><br><br>
+
+    <label>Reply Notes:<br>
+      <textarea name="reply_notes"></textarea>
+    </label><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    // Prefill from query string
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("username") || "";
+    document.getElementById("username").value = username;
+    document.getElementById("usernameDisplay").textContent = username;
+  </script>
+</body>
+</html>
