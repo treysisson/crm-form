@@ -40,34 +40,34 @@ body {
   background-color: white;
 }
 
-/* Custom styling for your CRM */
-.crm-title {
-  color: var(--primary-color) !important;
-  font-family: "STK", Georgia, serif;
-  font-weight: bold;
+/* Custom styling for your CRM - using higher specificity */
+h1.crm-title {
+  color: #31332f !important;
+  font-family: "STK", Georgia, serif !important;
+  font-weight: bold !important;
 }
 
-.crm-button {
-  background-color: var(--primary-color) !important;
+button.crm-button {
+  background-color: #31332f !important;
   color: white !important;
-  border: none;
+  border: none !important;
   transition: opacity 0.2s ease;
 }
 
-.crm-button:hover {
-  opacity: 0.9;
+button.crm-button:hover {
+  opacity: 0.9 !important;
 }
 
-.crm-button:disabled {
-  opacity: 0.5;
+button.crm-button:disabled {
+  opacity: 0.5 !important;
 }
 
 .crm-form-container {
-  background-color: rgba(226, 218, 235, 0.1);
+  background-color: rgba(226, 218, 235, 0.1) !important;
 }
 
 .crm-submit-button {
-  background-color: var(--secondary-color) !important;
+  background-color: #ffff8f !important;
   color: black !important;
 }
 
