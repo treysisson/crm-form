@@ -196,8 +196,8 @@
         .radio-option label {
             display: inline-block;
             padding: 6px 12px;
-            background: #c19a77;
-            border: 2px solid #c19a77;
+            background: #9ca3af;
+            border: 2px solid #9ca3af;
             border-radius: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -208,9 +208,9 @@
         }
         
         .radio-option label:hover {
-            background: #a8845f;
+            background: #6b7280;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(193, 154, 119, 0.3);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
         }
         
         .radio-option input[type="radio"]:checked + label {
@@ -448,8 +448,26 @@
                     submitBtn.textContent = 'Updating...';
 
                     try {
-                        const formData = Object.fromEntries(new FormData(form));
+                        // Collect form data including radio buttons
+                        const formData = {};
+                        
+                        // Get all form elements
+                        const formElements = form.querySelectorAll('input, textarea, select');
+                        
+                        formElements.forEach(element => {
+                            if (element.type === 'radio') {
+                                if (element.checked) {
+                                    formData[element.name] = element.value;
+                                }
+                            } else {
+                                formData[element.name] = element.value;
+                            }
+                        });
+                        
+                        // Add the original query
                         formData.query = query;
+
+                        console.log('Form data being sent:', formData); // Debug log
 
                         const updateResult = await makeApiRequest(
                             'https://primary-production-13b5.up.railway.app/webhook-test/update_user',
