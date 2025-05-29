@@ -27,26 +27,12 @@ body {
   min-height: 100vh;
 }
 
-@font-face {
-  font-family: "STK";
-  src: url("/fonts/STKBureauSerif-Light.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "STK";
-  src: url("/fonts/STKBureauSerif-Book.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-}
-
 .font-inter {
   font-family: "Inter", sans-serif;
 }
 
 .font-stk {
-  font-family: "STK", serif;
+  font-family: "Playfair Display", serif;
 }
 
 .rich-text {
