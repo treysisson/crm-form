@@ -1,21 +1,38 @@
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nimble CRM Lookup</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { 
-            font-family: system-ui, sans-serif !important; 
-            background-color: red !important; 
-        }
-        h1 { 
-            color: #31332f !important; 
-            font-size: 2rem !important; 
-            font-weight: bold !important;
-        }
-        button { 
-            background-color: #31332f !important; 
-            color: white !important; 
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-white text-gray-900">
+    <div class="min-h-screen p-6 flex flex-col items-center justify-start">
+      <header class="w-full max-w-4xl py-6 flex justify-between items-center">
+        <h1 class="text-2xl font-stk font-bold custom-primary-color">
+          Nimble CRM Search
+        </h1>
+      </header>
+      <main class="w-full max-w-4xl">
+        <div class="mb-6">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search by Instagram profile URL or email"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          />
+          <button
+            id="searchBtn"
+            class="mt-2 custom-primary-bg text-white px-4 py-2 rounded hover:opacity-90"
+          >
+            Search
+          </button>
+        </div>
+        <div id="statusMessage" class="mt-4 text-sm text-gray-600"></div>
+        <div id="formContainer" class="hidden mt-8 p-4 border rounded-lg custom-purple-bg"></div>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
