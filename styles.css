@@ -1,23 +1,8 @@
-@theme {
+/* CSS Custom Properties - using :root instead of @theme */
+:root {
   --primary-color: #31332f;
   --secondary-color: #ffff8f;
   --tertiary-color: rgba(56, 69, 47, 0.07);
-
-  --breakpoint-100: 100px;
-  --breakpoint-200: 200px;
-  --breakpoint-300: 300px;
-  --breakpoint-400: 400px;
-  --breakpoint-500: 500px;
-  --breakpoint-600: 600px;
-  --breakpoint-700: 700px;
-  --breakpoint-800: 800px;
-  --breakpoint-900: 900px;
-  --breakpoint-1000: 1000px;
-  --breakpoint-1100: 1100px;
-  --breakpoint-1200: 1200px;
-  --breakpoint-1300: 1300px;
-  --breakpoint-1400: 1400px;
-
   --color-primary: #31332f;
   --color-secondary: #ffff8f;
   --color-purple: #e2daeb;
