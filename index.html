@@ -402,7 +402,7 @@
 
             try {
                 const result = await makeApiRequest(
-                    'https://primary-production-13b5.up.railway.app/webhook/search_user',
+                    'https://primary-production-13b5.up.railway.app/webhook-test/search_user',
                     { query }
                 );
                 
@@ -470,7 +470,7 @@
                         console.log('Form data being sent:', formData); // Debug log
 
                         const updateResult = await makeApiRequest(
-                            'https://primary-production-13b5.up.railway.app/webhook/update_user',
+                            'https://primary-production-13b5.up.railway.app/webhook-test/update_user',
                             formData
                         );
 
