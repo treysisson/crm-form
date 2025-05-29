@@ -1,3 +1,8 @@
+/* Test to make sure CSS is loading */
+body { 
+    background-color: lightblue !important; 
+}
+
 /* CSS Custom Properties - using :root instead of @theme */
 :root {
   --primary-color: #31332f;
