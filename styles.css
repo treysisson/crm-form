@@ -1,9 +1,4 @@
-/* Test to make sure CSS is loading */
-body { 
-    background-color: lightblue !important; 
-}
-
-/* CSS Custom Properties - using :root instead of @theme */
+/* CSS Custom Properties */
 :root {
   --primary-color: #31332f;
   --secondary-color: #ffff8f;
@@ -22,14 +17,43 @@ body {
 }
 
 body {
+  font-family: system-ui, -apple-system, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: white;
+}
+
+/* Custom styling for your CRM */
+.crm-title {
+  color: var(--primary-color) !important;
+  font-family: Georgia, serif;
+  font-weight: bold;
+}
+
+.crm-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.crm-button:hover {
+  opacity: 0.9;
+}
+
+.crm-button:disabled {
+  opacity: 0.5;
+}
+
+.crm-form-container {
+  background-color: rgba(226, 218, 235, 0.1);
+}
+
+.crm-submit-button {
+  background-color: var(--secondary-color) !important;
+  color: black !important;
 }
 
 .font-inter {
