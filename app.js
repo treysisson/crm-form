@@ -107,7 +107,7 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
 
     try {
         const result = await makeApiRequest(
-            'https://primary-production-13b5.up.railway.app/webhook/search_user',
+            'https://primary-production-13b5.up.railway.app/webhook-test/search_user',
             { query }
         );
         
@@ -147,7 +147,7 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
                 formData.query = query;
 
                 const updateResult = await makeApiRequest(
-                    'https://primary-production-13b5.up.railway.app/webhook/update_user',
+                    'https://primary-production-13b5.up.railway.app/webhook-test/update_user',
                     formData
                 );
 
