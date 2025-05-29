@@ -1,38 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nimble CRM Lookup</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body class="bg-white text-gray-900">
-    <div class="min-h-screen p-6 flex flex-col items-center justify-start">
-      <header class="w-full max-w-4xl py-6 flex justify-between items-center">
-        <h1 class="text-2xl font-bold crm-title">
-          Nimble CRM Search
-        </h1>
-      </header>
-      <main class="w-full max-w-4xl">
-        <div class="mb-6">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search by Instagram profile URL or email"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-300"
-          />
-          <button
-            id="searchBtn"
-            class="mt-2 px-4 py-2 rounded crm-button"
-          >
-            Search
-          </button>
-        </div>
-        <div id="statusMessage" class="mt-4 text-sm text-gray-600"></div>
-        <div id="formContainer" class="hidden mt-8 p-4 border rounded-lg crm-form-container"></div>
-      </main>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #faf9fc;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: #31332f;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        main {
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .search-section {
+            margin-bottom: 2rem;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #ffff8f;
+            box-shadow: 0 0 0 3px rgba(255, 255, 143, 0.1);
+        }
+        
+        .search-btn {
+            background-color: #31332f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .search-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .status-message {
+            margin: 1rem 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .status-message.error {
+            color: #dc2626;
+        }
+        
+        .form-container {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-container.hidden {
+            display: none;
+        }
+        
+        .form-field {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+        }
+        
+        .form-field input[type="text"],
+        .form-field input[type="email"],
+        .form-field input[type="url"],
+        .form-field input[type="date"],
+        .form-field textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+        }
+        
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #ffff8f;
+            box-shadow: 0 0 0 3px rgba(255, 255, 143, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* Modern Radio Button Design */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .radio-option {
+            position: relative;
+        }
+        
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .radio-option label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 0;
+            backdrop-filter: blur(5px);
+        }
+        
+        .radio-option label:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .radio-option input[type="radio"]:checked + label {
+            background: #ffff8f;
+            border-color: #31332f;
+            color: #31332f;
+            font-weight: 600;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 143, 0.3);
+        }
+        
+        .submit-btn {
+            background-color: #ffff8f;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: opacity 0.2s;
+        }
+        
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Nimble CRM Search</h1>
+        </header>
+        
+        <main>
+            <div class="search-section">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search by Instagram profile URL or email"
+                >
+                <button class="search-btn" id="searchBtn">Search</button>
+            </div>
+            
+            <div id="statusMessage" class="status-message"></div>
+            <div id="formContainer" class="form-container hidden"></div>
+        </main>
     </div>
-    <script src="app.js"></script>
-  </body>
+
+    <script>
+        // Utility functions
+        function sanitizeText(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text.toString();
+            return div.innerHTML;
+        }
+
+        function validateApiResponse(result) {
+            if (!result || typeof result !== 'object') {
+                throw new Error('Invalid API response format');
+            }
+            if (!Array.isArray(result.fields)) {
+                throw new Error('Invalid fields data from API');
+            }
+            return true;
+        }
+
+        async function makeApiRequest(url, data) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        }
+
+        function createFormField(field) {
+            if (!field.key || !field.label || !field.type) {
+                console.warn('Invalid field structure:', field);
+                return null;
+            }
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'form-field';
+
+            const label = document.createElement('label');
+            label.textContent = sanitizeText(field.label);
+
+            let input;
+
+            if (field.type === 'text' || field.type === 'email' || field.type === 'url') {
+                input = document.createElement('input');
+                input.type = field.type === 'url' ? 'url' : field.type === 'email' ? 'email' : 'text';
+                input.value = sanitizeText(field.value || field.default || '');
+            } else if (field.type === 'date') {
+                input = document.createElement('input');
+                input.type = 'date';
+                input.value = field.value || field.default || '';
+            } else if (field.type === 'textarea') {
+                input = document.createElement('textarea');
+                input.value = sanitizeText(field.value || field.default || '');
+            } else if (field.type === 'radio') {
+                // Create modern radio button group
+                const radioGroup = document.createElement('div');
+                radioGroup.className = 'radio-group';
+                
+                if (Array.isArray(field.options)) {
+                    field.options.forEach((option, index) => {
+                        const radioOption = document.createElement('div');
+                        radioOption.className = 'radio-option';
+                        
+                        const radioInput = document.createElement('input');
+                        radioInput.type = 'radio';
+                        radioInput.name = field.key;
+                        radioInput.value = sanitizeText(option);
+                        radioInput.id = `${field.key}_${index}`;
+                        
+                        if (option === field.value || (!field.value && option === field.default)) {
+                            radioInput.checked = true;
+                        }
+                        
+                        const radioLabel = document.createElement('label');
+                        radioLabel.textContent = sanitizeText(option);
+                        radioLabel.setAttribute('for', `${field.key}_${index}`);
+                        
+                        radioOption.appendChild(radioInput);
+                        radioOption.appendChild(radioLabel);
+                        radioGroup.appendChild(radioOption);
+                    });
+                }
+                
+                wrapper.appendChild(label);
+                wrapper.appendChild(radioGroup);
+                return wrapper;
+            }
+
+            if (input) {
+                input.name = field.key;
+                wrapper.appendChild(label);
+                wrapper.appendChild(input);
+                return wrapper;
+            }
+            
+            return null;
+        }
+
+        function setStatus(message, type = 'info') {
+            const status = document.getElementById('statusMessage');
+            status.textContent = message;
+            status.className = `status-message ${type === 'error' ? 'error' : ''}`;
+        }
+
+        function toggleButton(button, loading = false) {
+            button.disabled = loading;
+            button.textContent = loading ? '🔍 Searching...' : 'Search';
+        }
+
+        // Main search functionality
+        document.getElementById('searchBtn').addEventListener('click', async () => {
+            const query = document.getElementById('searchInput').value.trim();
+            const formContainer = document.getElementById('formContainer');
+            const searchBtn = document.getElementById('searchBtn');
+
+            if (!query) {
+                setStatus('Please enter a search query', 'error');
+                return;
+            }
+
+            toggleButton(searchBtn, true);
+            setStatus('🔍 Searching...');
+            formContainer.innerHTML = '';
+            formContainer.classList.add('hidden');
+
+            try {
+                const result = await makeApiRequest(
+                    'https://primary-production-13b5.up.railway.app/webhook-test/search_user',
+                    { query }
+                );
+                
+                validateApiResponse(result);
+                const { userExists, fields } = result;
+
+                setStatus(userExists ? '🟢 Existing user found' : '🔵 New user - fill out form');
+                formContainer.classList.remove('hidden');
+
+                const form = document.createElement('form');
+                form.id = 'crmForm';
+
+                // Create form fields
+                fields.forEach(field => {
+                    const fieldElement = createFormField(field);
+                    if (fieldElement) {
+                        form.appendChild(fieldElement);
+                    }
+                });
+
+                // Submit button
+                const submitBtn = document.createElement('button');
+                submitBtn.textContent = 'Submit';
+                submitBtn.type = 'submit';
+                submitBtn.className = 'submit-btn';
+
+                form.appendChild(submitBtn);
+
+                // Form submission handler
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Updating...';
+
+                    try {
+                        const formData = Object.fromEntries(new FormData(form));
+                        formData.query = query;
+
+                        const updateResult = await makeApiRequest(
+                            'https://primary-production-13b5.up.railway.app/webhook-test/update_user',
+                            formData
+                        );
+
+                        setStatus(updateResult.success ? '✅ Successfully updated' : '⚠️ Update failed');
+                    } catch (error) {
+                        console.error('Error during update:', error);
+                        setStatus('❌ Error updating user', 'error');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                    }
+                });
+
+                formContainer.appendChild(form);
+
+            } catch (error) {
+                console.error('Error during search:', error);
+                setStatus('❌ Error searching user', 'error');
+            } finally {
+                toggleButton(searchBtn, false);
+            }
+        });
+
+        // Enter key support
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+    </script>
+</body>
 </html>

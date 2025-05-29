@@ -38,6 +38,75 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   background-color: white;
+  color: #1f2937;
+}
+
+/* Layout styles to replace Tailwind */
+.container {
+  min-height: 100vh;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+header {
+  width: 100%;
+  max-width: 56rem;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  max-width: 56rem;
+}
+
+.form-section {
+  margin-bottom: 1.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  outline: none;
+  font-size: 1rem;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #fef3c7;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+
+.status-message {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.form-container {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Custom styling for your CRM - using higher specificity */
