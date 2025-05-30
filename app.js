@@ -162,6 +162,27 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
             }
         });
 
+        form.querySelector('[name="current_stage"]').addEventListener('change', (e) => {
+            const nextStepField = form.querySelector('[name="next_step"]');
+            const nextStepDateField = form.querySelector('[name="next_step_date"]');
+            const dateLastReplied = form.querySelector('[name="date_they_last_replied"]').value;
+            const selectedStage = e.target.value;
+
+            if (selectedStage === 'Stage 1 Replied to Outreach') {
+                nextStepField.value = 'Follow-up on info I sent';
+
+                if (dateLastReplied) {
+                const d = new Date(dateLastReplied);
+                d.setDate(d.getDate() + 7);
+                nextStepDateField.value = d.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                }
+            }
+
+            if (selectedStage === 'Stage 2 Verbal Confirmation for Sample') {
+                nextStepField.value = 'Get Mailing Address';
+                nextStepDateField.value = '2025-07-01';
+            }
+            });
         formContainer.appendChild(form);
 
     } catch (error) {
