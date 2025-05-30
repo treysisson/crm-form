@@ -248,7 +248,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Nimble CRM Search v2</h1>
+            <h1>Nimble CRM Search v2.0</h1>
         </header>
         
         <main>
@@ -293,7 +293,7 @@
             });
             
             if (!response.ok) {
-                throw new Error(HTTP error! status: ${response.status});
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             
             return await response.json();
