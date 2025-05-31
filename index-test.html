@@ -465,29 +465,27 @@
       const nextStepDateInput = form.querySelector('input[name="next_step_date"]');
 
       currentStageRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-          const selected = radio.value;
+          radio.addEventListener('change', () => {
+            const selected = radio.value;
 
-          if (selected === 'Stage 1 Replied to Outreach') {
+            if (selected === 'Stage 1 Replied to Outreach') {
               const lastReply = form.querySelector('input[name="last_reply_date"]')?.value;
               if (lastReply) {
                 const date = new Date(lastReply);
                 date.setDate(date.getDate() + 7);
-                const formatted = date.toISOString().split('T')[0]; // ✅ fixed date format
+                const formatted = date.toISOString().split('T')[0];
                 if (nextStepDateInput) nextStepDateInput.value = formatted;
               }
               const followUpRadio = form.querySelector('input[name="next_step"][value="Follow-up on info I sent"]');
               if (followUpRadio) followUpRadio.checked = true;
+
+            } else if (selected === 'Stage 2 Verbal Confirmation for Sample') {
+              if (nextStepDateInput) nextStepDateInput.value = '2025-07-01';
+              const mailingRadio = form.querySelector('input[name="next_step"][value="Get Mailing Address"]');
+              if (mailingRadio) mailingRadio.checked = true;
             }
-
-          } else if (selected === 'Stage 2 Verbal Confirmation for Sample') {
-            if (nextStepDateInput) nextStepDateInput.value = '2025-07-01';
-            const mailingRadio = form.querySelector('input[name="next_step"][value="Get Mailing Address"]');
-            if (mailingRadio) mailingRadio.checked = true;
-
-          }
+          });
         });
-      });
 
 
     } catch (err) {
