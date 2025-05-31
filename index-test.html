@@ -243,7 +243,7 @@
 <body>
   <div class="container">
     <header>
-      <h1>Nimble CRM Search test</h1>
+      <h1>Nimble CRM Search test 2.0</h1>
     </header>
 
     <main>
@@ -469,18 +469,22 @@
           const selected = radio.value;
 
           if (selected === 'Stage 1 Replied to Outreach') {
-            const lastReply = form.querySelector('input[name="last_reply_date"]')?.value;
-            if (lastReply) {
-              const date = new Date(lastReply);
-              date.setDate(date.getDate() + 7);
-              const formatted = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}/${date.getFullYear()}`;
-              if (nextStepDateInput) nextStepDateInput.value = formatted;
+              const lastReply = form.querySelector('input[name="last_reply_date"]')?.value;
+              if (lastReply) {
+                const date = new Date(lastReply);
+                date.setDate(date.getDate() + 7);
+                const formatted = date.toISOString().split('T')[0]; // ✅ fixed date format
+                if (nextStepDateInput) nextStepDateInput.value = formatted;
+              }
+              const followUpRadio = form.querySelector('input[name="next_step"][value="Follow-up on info I sent"]');
+              if (followUpRadio) followUpRadio.checked = true;
             }
-            if (nextStepInput) nextStepInput.value = 'Follow-up on info I sent';
 
           } else if (selected === 'Stage 2 Verbal Confirmation for Sample') {
             if (nextStepDateInput) nextStepDateInput.value = '2025-07-01';
-            if (nextStepInput) nextStepInput.value = 'Get Mailing Address';
+            const mailingRadio = form.querySelector('input[name="next_step"][value="Get Mailing Address"]');
+            if (mailingRadio) mailingRadio.checked = true;
+
           }
         });
       });
