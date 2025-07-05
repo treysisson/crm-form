@@ -466,9 +466,10 @@
 
       // Set dependent field logic
       const currentStageRadios = form.querySelectorAll('input[name="current_stage"]');
-      const nextStepInput = form.querySelector('input[name="next_step"]') || form.querySelector('select[name="next_step"]');
+      const nextStepRadios = form.querySelectorAll('input[name="next_step"]');
       const nextStepDateInput = form.querySelector('input[name="next_step_date"]');
 
+      // Current stage change handlers
       currentStageRadios.forEach(radio => {
           radio.addEventListener('change', () => {
             const selected = radio.value;
@@ -491,6 +492,25 @@
             }
           });
         });
+
+      // Next step change handlers
+      nextStepRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const selected = radio.value;
+
+          if (selected === 'Follow-up on info I sent') {
+            // Set date to 2 weeks from today
+            const today = new Date();
+            today.setDate(today.getDate() + 14);
+            const formatted = today.toISOString().split('T')[0];
+            if (nextStepDateInput) nextStepDateInput.value = formatted;
+
+          } else if (selected === 'Disqualified') {
+            // Clear the next step date
+            if (nextStepDateInput) nextStepDateInput.value = '';
+          }
+        });
+      });
 
 
     } catch (err) {
