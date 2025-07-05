@@ -462,16 +462,7 @@
 
       formContainer.appendChild(form);
 
-      // Debug: Log all form fields
-      console.log('=== FORM DEBUG ===');
-      const allInputs = form.querySelectorAll('input, textarea, select');
-      allInputs.forEach(input => {
-        console.log(`Field: ${input.name} | Type: ${input.type} | Value: ${input.value}`);
-        if (input.type === 'radio') {
-          console.log(`  Radio option: "${input.value}"`);
-        }
-      });
-      console.log('==================');
+
 
       //new dynamic form elements
 
@@ -521,15 +512,11 @@
 
       // Engagement change handlers
       const engagementRadios = form.querySelectorAll('input[name="engagement"]');
-      console.log('Engagement radios found:', engagementRadios.length);
       engagementRadios.forEach(radio => {
-        console.log('Engagement option:', radio.value);
         radio.addEventListener('change', () => {
           const selected = radio.value;
-          console.log('Engagement changed to:', selected);
 
           if (selected === 'Disqualified') {
-            console.log('Clearing next step date...');
             // Clear the next step date
             if (nextStepDateInput) nextStepDateInput.value = '';
           }
