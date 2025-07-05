@@ -504,8 +504,17 @@
             today.setDate(today.getDate() + 14);
             const formatted = today.toISOString().split('T')[0];
             if (nextStepDateInput) nextStepDateInput.value = formatted;
+          }
+        });
+      });
 
-          } else if (selected === 'Disqualified') {
+      // Engagement change handlers
+      const engagementRadios = form.querySelectorAll('input[name="engagement"]');
+      engagementRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          const selected = radio.value;
+
+          if (selected === 'Disqualified') {
             // Clear the next step date
             if (nextStepDateInput) nextStepDateInput.value = '';
           }
